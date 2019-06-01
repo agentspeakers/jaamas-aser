@@ -1,0 +1,519 @@
+\section{The {\aser} Proposal}
+\label{sec:proposal}
+
+\todo{OLD VERSION}
+
+To overcome the problems discussed above, we consider two key changes
+in the plan model.
+%
+The first one is to extend the plans beyond the simple sequence of
+actions and goals, so as to include also the possibility to specify
+reactive behaviour encapsulated within the plan.
+%
+Coherently, with the {\asl} model, such a behaviour can be expressed
+in terms of e-plans.
+%
+% JH: I changed a bit the terminology
+Accordingly, a plan becomes the \emph{scope} of ($i$) a sequence of
+actions (referred as \emph{body actions}), ($ii$) a set of
+\emph{e-plans}, specifying a reactive behaviour which is active at
+runtime only when the plan is in execution, and ($iii$) a set of
+\emph{g-plans}, specifying plans to achieve subgoals that are relevant
+only in the scope of this plan. The e-plans and g-plans are referred
+to as \emph{sub-plans}.
+%
+The sub-plans may include also reactions to failures occurring when
+the plan is executed.
+%% RHB: So the failure handling plans for the outer goal were moved
+%% inside (as well as out)? I'm against this, but I guess this is a
+%% democracy :D
+
+%
+%
+%
+The second one is enforcing that e-plans --- as pieces of reactive
+behaviours --- must always be defined in the context of a g-plan. We
+are thus enforcing the principle that an agent does (and reacts)
+always because of a goal to achieve or maintain.
+%
+This ensures that programmers explicitly specify what is the goal to
+achieve even when defining a purely reactive behaviour.
+%
+In so doing, at runtime every intention\footnote{As in \asl, an
+  intention is the result of the deliberation to commit to some
+  desire. Briefly, if the agent has an applicable plan for a goal
+  event (i.e.\ a desire), it commits to it by creating an intention
+  based on that plan and starts executing it.} has an
+associated goal being pursued.
+%
+
+In the remainder of the section, we first describe in detail the
+syntax and informal semantics of the new plan model, including simple
+examples, and then we discuss the key benefits.
+
+\subsection{Informal Syntax and Semantics}
+\label{sec:infSS}
+
+At the top level, an {\aser} program is a collection of g-plans, whose
+syntax is exemplified below:
+%
+% CURRENT VERSION 0.2 (in the doc)
+%
+{\small
+\begin{verbatim}
+/*  g-plans to achieve goal g in context c */
++!g : c <: gc { 
+
+  <- a; b; ?g1; !g1; !!g2. // plan body (optional).
+
+  /* e-plans */
+  +e1 : c1 <- b1.	
+  +e2 : c2 <- b2.
+  +!k : true <: b(10) {
+    <- a,b,c.
+    +e3 : c3 <- b3. // possible old-style plans
+  }	
+  
+  /* e-plans catching failures */
+  -!g[error(ia_failed)] : ...
+    <- ... catches from failures 
+
+  /* further g-plans */
+  +!g1 : c1 <: gc1 { ... }
+}
+\end{verbatim}}
+
+Like in {\asl}, a g-plan is defined with a head and a body.
+%
+% JH: avoid to use the term intention here... goal oriented
+% programming. explain intention in the semantics 
+Besides the triggering event and the context, in \aser\ the head has a
+third new element: a \emph{goal condition}, optionally written after
+\texttt{<:}, with the same syntax as the context. While the context is
+a pre-condition to select a plan as applicable for an event, the goal
+condition is a post-condition that defines when the goal can be
+considered as achieved\footnote{Or considered impossible to achieve,
+  or the motivation for the goal no longer holds, etc. Programmers can
+  use this for any condition that implies the goal should no longer be
+  pursued. Note that, when programming declaratively, this condition
+  is likely to include the goal in the triggering event itself (as
+  believed to be true).}. Any goal created based on this g-plan is
+considered achieved if and only if
+%% RHB: isn't if and only if too strong?
+%% Jomi is probably right, keeping if and only if
+this condition holds. If no goal condition is specified, the goal is
+considered achieved as soon as the body execution completes, as usual
+in \asl. However, if a goal condition is defined, having finished the
+body execution is not sufficient to deactivate the goal. Notice that
+if the goal condition becomes true while the body actions are being
+executed, the execution ceases immediately, since the goal being
+achieved means no further action would be necessary.
+% aborted. %%AR: isn't 'aborted' suggesting a kind of failure? 
+% JH: interrupted is also not but, since it will not be resumed, I changed to stop
+
+In {\aser} the body defines the g-plan scope enclosed by `\texttt{\{}'
+and `\texttt{\}}' and is composed of the body actions (after `\texttt{<-}'
+and before `\texttt{.}')  as well as sub-plans.
+%
+Like in {\asl}, as soon as a g-plan is instantiated, the body actions
+start to execute. The body actions can be empty --- this is the case
+of g-plans expressing a purely reactive behaviour.
+%
+The sub-plans of the g-plan are considered as relevant only for events
+produced by the g-plan execution, since they are in the scope of the g-plan.
+
+% GoalCondition is analogous to the context: however, if context can be considered to be as the pre-condition to execute the plan, the GoalCondition are like a post-condition, which corresponds to a declarative description of the goal to be achieved. 
+%
+%Alternatively, the execution of a plan can be forced to complete by using an internal action .done - this is useful everytime the goal condition cannot be effectively or naturally described as a boolean expression.
+%
+%If [GoalCondition] is not specified, by default the condition is that all actions of the main sequence have been executed and completed, in continuity with the AS model. This condition is explicitly represented by the new predefined predicate \texttt{.is\_done}.
+%
+% The body of the plan provides a lexical and runtime scope of the sub-plans, that is:  variables used in the g/c expression are visible also to subplans the lifetime/availability of the sub-plans is limited to the time in which the g-plan is in execution
+
+
+While a g-plan is executing, it can be \emph{interrupted} by events
+relevant for its e-plans. When the agent perceives an event and an
+e-plan from g-plan is applicable according to its specified context,
+then the execution of the g-plan body is suspended until the body of
+the e-plan finishes its execution.
+%
+In {\asl}, other plans do also interrupt the execution of a plan in
+the case of subgoals. For example, in the body \textsf{a1; a2; !g1;
+  a3}, \textsf{g1} is a sub-goal and thus the action \textsf{a3} is
+executed after the body of \textsf{g1} has finished. The plan body
+execution in interrupted synchronously.
+%
+In {\aser} this uniformly occurs also with any kind of events, not
+only sub-goal events; that is, the body actions can be interrupted to
+react to events coming from the environment. However, in this case the
+interruption is \emph{asynchronous} -- the point where the body
+actions is interrupted is unknown, and depends on the environment, at
+runtime.
+%
+This behaviour is ruled by the (extended) reasoning cycle, which will
+be described in next section.
+
+
+% Failures generated by either the main sequence or by sub-plans generate a -!g that could handled.
+%[TO BE COMPLETED?]
+%
+\subsection{Examples}
+To give a more concrete taste of the language, we consider again the
+examples seen in Section~\ref{sec:motivation}, now rewritten in
+{\aser}.
+%
+The robot cleaning example becomes:
+
+\begin{small}
+\begin{verbatim}
++!clean_env <: false {
+   +location(waste,X) : location(robot,X) & location(bin,Y)
+      <- pick(waste); !location(robot,Y); drop(waste).
+}
+\end{verbatim}
+\end{small}
+
+\noindent We can give an explicit reason for the reactive behaviour by
+encapsulating the e-plan inside a g-plan, with an explicit goal
+\texttt{clean\_env}.
+%
+Setting the goal condition to \texttt{false} means that the plan
+execution is going to last forever. It is a way of implementing some
+form of maintenance goal.
+%
+This is also a particular case where the body of the g-plan does not
+have any actions.
+%
+
+The \texttt{elab\_nums} example seen before can be rewritten to fully
+encapsulate the strategy in the same g-plan:
+
+{\small
+\begin{verbatim}
++!elab_nums(0).
++!elab_nums(N) <: stop | .body_done {
+   <- !elab(N); !elab_nums(N-1).	
+   +!elab(M) <- ...
+}
+\end{verbatim}}
+
+  \noindent Here \texttt{.body\_done} is a predefined internal action
+  that succeeds when the body actions have been completed. The goal
+  \texttt{elab\_nums} is achieved either by the perception of
+  \texttt{stop} or by the execution of its body actions.
+%
+  In case we want to take some action to react to \texttt{stop}, we
+  can introduce an e-plan as follows:
+
+{\small
+\begin{verbatim}
++!elab_nums(0).
++!elab_nums(N) {
+   <- !elab(N); !elab_nums(N-1).
+   +!elab(N) <- ...
+   +stop <- println("stopped"); .done.
+}
+\end{verbatim}}
+
+  For the example of plans to handle social obligations, we can define
+  an explicit goal by encapsulating the e-plans in a g-plan as
+  follows:
+\begin{small}
+\begin{verbatim}
++!be_obedient <: false {
+   +obligation(Ag,committed(Goal)) : .my_name(Ag)      <- ...
+   +obligation(Ag,achieve(Goal))   : .my_name(Ag)      <- ...
+   -obligation(Ag,Goal) : .my_name(Ag) & .intend(Goal) <- ...
+   ...
+}
+\end{verbatim}
+\end{small}
+\noindent Now the agent can disable these plans by simply performing
+\texttt{. drop\_intention(be\_obedient)}, and resuming its obedient
+behaviour by adopting the goal \texttt{!be\_obedient}, and it can also
+check whether it is being obedient by testing
+\texttt{.intend(be\_obedient)}.
+
+With the new language, we can program different kinds of commitments
+to goals~\cite{cohen:90,winikoff:02} by exploiting the goal
+condition. For instance, the Single Minded Commitment for goal
+\texttt{g} can be programmed as:
+\begin{small}
+\begin{verbatim}
++!g <: g | f {
+   ...
+}
+\end{verbatim}
+\end{small}
+where \texttt{f} states when the goal becomes impossible. The agent
+commits to achieve \texttt{g} until \texttt{g} is believed either true
+or impossible to achieve. To program this kind of commitment in \asl,
+we have to follow some programming patterns requiring extra plans
+(three extra plans as shown in~\cite{hubner:06b}).
+
+
+
+
+%%%RHB: The paragraph below isn't clear to me
+%  \bigskip The proposed approach allows us to avoid towers of subgoal
+%  calls, that are used when a plan does some action and then should
+%  wait that some condition is achieved, in order to complete,
+%  eventually reacting to some events to adapt the course of actions.
+%%
+%An example is a simple thermostat. 
+%%
+%Let's consider the goal to achieve some temperature +!temp(T):
+%
+%{\small
+%\begin{verbatim}
+%+!temp(T) : temp(CT) & CT < T & not warming
+%  <-  switchOnWarming; !temp(T).
+%+!temp(T) : temp(CT) & CT > T & not cooling
+%  <-  switchOnCooling; !temp(T).
+%+!temp(T) : temp(CT) & CT != T 
+%  <-  !temp(T).
+%+temp(T) : temp(T) <-  stop.
+%\end{verbatim}}
+%
+%  \noindent There is here a kind of \emph{cognitive busy waiting}
+%  situation: after switching on the HVAC system (to cool down or warm
+%  up), we need to check continuously the condition to
+%  know when/if the goal has been achieved, before ending the plan.
+%%
+%  This is problematic for 2 reasons: the size of the intention stack
+%  is growing indefinitely and performance overhead.
+%% JH: not sure we should go for performance arguments as above. the
+%% need to check all conditions every cycle is equivalent to the cost
+%% of the above cognitive busy waiting
+%% RHB: Furthermore, is the intention stack really growing indefinitely
+%% in this case??? Probably not as it's just tail recursion and Jomi
+%% optimised that in Jason, no need to use !! anymore. 
+%%
+%The \aser version avoids that problem:
+%
+%{\small
+%\begin{verbatim}
+%+!temp(T) : temp(CT) & CT < T 
+%  <: temp(T) & not warming & not cooling {  
+%  <- switchOnWarming.
+%  +temp(T) <- stop. // There is bound
+%}
+%
+%+!temp(T) : temp(CT) & CT > T 
+%  <: temp(T) & not warming & not cooling {  
+%  <- switchOnCooling.	
+%  +temp(T) <- stop.		
+%}
+%+!temp(T) : temp(T).
+%\end{verbatim}}
+%
+%% JH: I am not sure to present this example, seems more complex than original code
+%% JH: it is not equivalent to ASL version: if the first plan is
+%% triggered, how could the second be triggered latter?
+%% RHB: Personally, I don't like examples about thermostats very much...
+%
+%Remarks:
+%\begin{itemize}
+%\item the T variable used inside the plan body (+temp(T) <-..) has been bound in +!temp(T)
+%\end{itemize}
+%
+%\noindent  In Jason, the original AgentSpeak(L) solution could be avoided  by exploiting a .wait internal action that suspends a plan until some condition is achieved:
+%
+%{\small
+%\begin{verbatim}
+%+!temp(T) : temp(CT) & CT < T 
+%  <-  switchOnWarming;
+%      .wait(temp(T));
+%      stop.
+%
+%+!temp(T) : temp(CT) & CT > T 
+%  <-  switchOnCooling;
+%      .wait(temp(T));
+%      stop.
+%\end{verbatim}}
+%
+%  \noindent However, this solution is no longer effective (by itself)
+%  if something could happen while waiting which would require changing
+%  the course of action.
+%%
+%  For instance, suppose that while warming up, the temperature value
+%  surpasses the target value T, such that we would need to start
+%  cooling. In this case, the .wait solution must be strongly reworked
+%  and becomes complicated.
+%%
+%The complete solution using the extended plan model is as follows:
+%
+%{\small
+%\begin{verbatim}
+%+!temp(T) <: temp(T) & not warming & not cooling {
+%  +temp(T) <- stop.		
+%  +temp(T1) : T1 > T <- switchOnCooling.
+%  +temp(T1) : T1 < T <- switchOnWarming.
+%}
+%\end{verbatim}
+%}
+%
+%% JH: shouldn't we present only the above solution? clear and simpler 
+%% is the test not warming/ not cooling necessary on the GC
+%
+%% RHB: The goal condition of the plan above is strange. What is if
+%% for? Isn't it the same as .done in the first +temp plan?
+%
+%\noindent Maintenance goal: to achieve and keep the temperature at the target temperature T, with the possibility of dynamically updating/changing T.
+%% RHB: The phrase above needs improvement
+%
+%{\small
+%\begin{verbatim}
+%+!target_temp(T) <: false {
+%  <- +target_temp(T).	
+% 
+%  +temp(T) : target_temp (T) <- stop.		
+%  +temp(T1) : target_temp(TT) & T1 > TT <- switchOnCooling.	  
+%  +temp(T1) : target_temp(TT) & T1 < TT <- switchOnWarming.
+% 
+%  +target_temp(TT) : temp(TT)  <- stop.	
+%  +target_temp(TT) : 
+%    temp(T) & T < TT & not warming <- switchOnWarming.
+%  +target_temp(TT) : 
+%    temp(T) & T > TT & not cooling <- switchOnCooling.
+%}
+%\end{verbatim}}
+
+ \subsection{Failure Management}
+
+ Failures generated by the execution of actions of sub-plans for a
+ goal \texttt{g} can be handled and managed by:
+
+%%RHB: Carefull, changed but feel free to 
+\begin{itemize}
+\item subplans of type \texttt{-!g} listed in the body of the g-plan;
+\item plans at the same level of \texttt{+!g}, if the event is not
+  managed within the body.
+\end{itemize}
+
+\noindent In terms of style, it is more in keeping with the new
+language to include the failure plans within the scope of the
+g-plan. However, it is also true that if we define a plan for
+\texttt{+!g} at a certain level of a g-plan tree\footnote{Note that
+  g-plans within g-plans now implicitly form a plan tree for a
+  top-level goal, and the plan library is thus a forest of such
+  trees.}, it might make more sense to the programmer if the goals for
+\texttt{-!g} are all placed at the same level (specially if the
+programmer is influenced by the style of the Jason variant of
+AgentSpeak).
+
+% \noindent In the latter case, the event representing the failure could
+% be exactly \texttt{-!g}, as in Jason, i.e. the event which is
+% generated when the goal is removed.
+%
+% This strategy cannot be adopted in the former case, since we want to
+% react to a failure but the corresponding goal and intention has not
+% been removed yet, so no -!g event is generated. For this reason, we
+% need to introduce a new event: \texttt{+/err\_term} [TEMPORARY SYNTAX]
+% representing the failure of an action belonging to the main sequence
+% or to the body of subplans.
+%%
+%% RHB: I find this rather clumsy, besides not being formalised. Is it
+%% worth going into details of a new mechanism for plan failure? We
+%% could just claim it's as before plus now they can be inside the
+%% g-plan IF YOU MUST :D
+%% Besides, I can't see why we can't generate a -!g event even without
+%% removing the rest of the intention (that's what Jason always did
+%% anyway).
+
+%% RHB: I'm changing this as discussed with Jomi but feel free to
+%% bring it back
+% {\small
+% \begin{verbatim}
+% +!g : c <: GoalCondition {
+%   <- a; b; ? ; c. 
+%   ...
+%   +/err_term : cn <- bn
+% }
+% \end{verbatim}}
+
+%   \noindent In the reasoning cycle, the \texttt{+/err\_term} is
+%   treated as the other events: if an applicable plan is found, it is
+%   selected and executed (in the same intention).
+% %
+%   Otherwise, the behaviour is like it is in pure AgentSpeak(L) --- the
+%   whole intention is removed and a \texttt{-!g} event is generated.
+
+%\subsection{Discussion}
+% [TO BE COMPLETED]
+%
+% In this section we go back on the key issues, showing how the approach is effective in overcoming them.
+%
+\subsection{Key points}
+
+Before giving a more formal description of the semantics, we conclude
+this section by summarising the key points brought out by {\aser}:
+%
+\begin{description}
+%
+\item[Encapsulation] -- The strategy to achieve a goal is encapsulated
+  in one or multiple g-plans, each embedding also the reactive
+  behaviour which is part of the strategy.
+%
+  The effect is to reduce code fragmentation, improving its
+  understanding.
+%
+\item[Explicit goals] -- Every behaviour of the agent is now
+  explicitly related to some goal to achieve.
+%
+  This promotes a more goal-oriented programming style, yet preserving
+  the possibility to easily define g-plans based on purely reactive
+  strategies;
+%
+  this allows the agent to better \emph{manage} its intentions. For
+  instance, a programmer can now do a simple
+  \texttt{.drop\_intention(g)} to disable the behavior of e-plans
+  embedded in the corresponding g-plans.
+%
+% In {\asl} this is quite tricky to do.
+In {\asl}, the relation goal-intention is not one-to-one. {\asl} can have intentions from e-plans and so intentions without a explicitly represented goal. 
+In {\aser} there is a one-to-one relation between goals and intentions. 
+%
+All intentions come from goals (only explicit goals are allowed). 
+%
+Primitives to handle goals can thus handle \emph{all} intentions. 
+%
+In {\asl}, primitives to handle goals can manage a limited set of the
+intentions (those created from goal addition plans).
+
+
+\item[Failure handling] -- Thanks to explicit goals, failures
+  generated in the body of an e-plan can now be directly captured and
+  managed by failure recovery plans defined for g-plan, without the
+  need for auxiliary goals and plans to be introduced.
+
+\item[Coarse-grained intentions] -- In {\asl}, each e-plan in
+  execution has its own intention/stack, which runs concurrently to
+  the other intentions. Conceptually, this follows the idea that
+  the management of environment events are not part of an existing
+  overall plan to achieve some goal.
+%
+  In the new model instead, an e-plan inside a g-plan is meant to
+  specify a behaviour that is useful for achieving the goal of the
+  g-plan, so part of the same intention.
+%
+  For this reason, if an e-plan (sub-plan) inside a g-plan in
+  execution is triggered, no new intentions are generated and the body
+  of the sub-plan is placed on the top of the stack of the same
+  intention.
+%
+  The new model leads then to more coarse-grained intentions.
+%
+%%% JH: commented for now, while we are discussing it
+%The general effect is to reduce the number of intentions. 
+%
+%This has an impact on the reasoning cycle, for instance on the step selecting the intention to carry on.
+\end{description}
+%\subsubsection{Intention implicit Interruption}
+%
+%The effect is to implicitly interrupt and suspend the main sequence (body) of the g-plan - if available and if not already completed.
+%%
+%Conceptually, this is the asynchronous version of the suspension that occurs when a subgoal is specified (!g) in the body of a plan. This causes exactly the suspension of the body and the pushing of the body of the new plan on the top of the stack of the intention.
+
+% \subsubsection{Compatibility with {\asl}}
+

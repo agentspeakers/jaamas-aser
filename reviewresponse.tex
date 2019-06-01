@@ -1,0 +1,602 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=2cm]{geometry}
+
+\title{Response to Reviewers}
+\author{Agent Programming in the Cognitive Era\\by Bordini, El Fallah Seghrouchni, Hindriks, Logan, Ricci}
+\date{Submitted to JAAMAS 20th Anniversary Special Issue}
+
+\newenvironment{reviews}{\bigskip\itshape}{\upshape\bigskip}
+\newenvironment{response}{\bigskip\normalfont}{\bigskip}
+\newcommand{\tbd}[1]{\textsf{\textbf{To Do:} #1}}
+
+\begin{document}
+\maketitle
+
+We would like thank the reviewers for the excellent suggestions they made. Before we start with the more detailed response to the excellent specific points made by the reviewers, we would like to emphasise first that this is a paper in the VIEWPOINT category of JAAMAS submissions. It is \emph{not} a technical paper \emph{nor} a survey paper. It is not the purpose here to write a survey on Agent Oriented Programming, and in fact we don't have the space for the kind of literature review the reviewers would like us to do (with excellent suggestions, but we were only able to address a limited number of those suggestions). That survey section on Programming Languages specifically is there only to give a brief view of the history of our research community, acknowledging some of the papers that had historical impact in the area. The most important related work, however, are the ones where specific AI techniques have been incorporated into Agent programming platforms. We aim to have a thorough account of that, so if we missed any work on that area, we will be happy to add further references.
+
+Below, we reproduce the reviewer comments (in italics) and provide our responses (in regular font).
+
+\begin{reviews}
+Dear Authors,
+
+Thank you for submitting your manuscript to JAAMAS. After careful review, the paper has been found to need major revisions before it could be reconsidered for publication in the journal. Below you will find reviewer comments, which we hope are helpful to you in preparing future versions of your article. As we have discussed separately, this will be a viewpoint and the reviews below generally approach it in that context. I look forward to seeing the revision.
+
+\begin{response}
+Any response???
+\end{response}
+
+
+With our very best wishes,
+
+--The Editors in Chief
+======================
+
+Reviewer \#1: The paper presents a state of art of agent programming for the last 20
+years, showing how it can contribute for the development of future
+intelligent systems. In particular, it stresses the implementations
+of the BDI model and indicates possible enhancements on its sense,
+plan and act phases, particularly using other AI techniques.
+
+In my opinion, the subject discussed in the paper is completely adherent
+to this special issue.
+
+The paper is well written and easy to read. One major revision that
+should be made, in case of acceptance, concerns the presentation of
+references in the text. There are 2 different styles: (XX and YY,
+year) and XX and YY (year). The first should be used as \\cite while
+the second should be used as \\citet, when the authors are subject of
+the phrase. In most of the paper, occurs the opposite, and some
+phrases are difficult to understand. Some examples:
+page 5, lines 41 and 42, page 6 line 19, page 13 line 32.
+
+Although the core of the paper discusses important questions linking
+AOP and AI, in my opinion there are some issues that need to be
+addressed in the final version of the paper, before acceptance:
+
+1. better (more precise)  definition of some core concepts used in the text
+
+2. relation between AOP and other important aspects of AI (that
+perhaps are mentioned in the text and not particularly stressed as
+they should have been)
+
+Regarding the first remark, the paper uses quite indistinctively the
+following expressions as synonyms:
+- BDI model
+- BDI programming language / agent programming language
+- BDI programming language / BDI platform / BDI architecture
+- BDI agent / agent
+- agent programming / multi-agent programming
+
+Two examples of such indistinct uses:
+
+In page 15, the title of section 4.2 is AI embedded into agents, but
+in the content you mention "... integrated into the BDI architecture
+... ". What about other types of agents, not BDI? I understand the
+focus of the paper is BDI agents; hence you must change the title of
+the section.
+
+\begin{response}
+Thanks, the title of the section was changed as suggested.
+\end{response}
+
+In page 17, in Discussion section, you say "... how AI can be
+integrated into the BDI model...". I do not think that you have
+shown this in the paper, I have seen integration to BDI agent
+programming languages, not to the BDI model.
+
+\begin{response}
+We have corrected this to refer to the BDI model as used in agent programming languages specifically.
+\end{response}
+
+Most of the paper deals with BDI agent programming, considering a
+single agent. In this sense, lines 29-36 in page 6, are *not*
+implementations of the BDI programming model, although presented as
+such in section 2.3. I understand the reference to EMAS (and its
+predecessors) workshop but quite all the questions regarding
+organizations, norms, environments were addressed by other
+communities, like COIN for instance. Important references to the topic
+of the paragraph, as Opera (Dignum), MOISE (Hubner) and Teams (Tambe)
+should be mentioned.  Regarding the environment programming, is it
+multi-agent programming or as a AI service, like you mention Cartago
+in page 15? In other words, programming environments is part of multi-agent
+programming or not? It is very confusing!
+
+Regarding the 2nd remark, you do not make any mention to the current
+and important issues of ethical and explainable AI. I believe that the
+BDI approach can be extended regarding ethical issues (there are
+published results about this, for instance, Dignum's and Boissier's
+work) that deserves to be mentioned in such a vision of the future 20
+years of AOP.
+
+Some points that need to be made clearer:
+
+page 2 - Title of section 2 is misleading, since except for the lines
+mentioned above, you do not present multi-agent programming in this
+section.
+
+\begin{response}
+We have changed the title as suggested.
+\end{response}
+
+page 3 - I see problems in some arrows in  Figure 1. Percepts can
+generate goals directly? Who generate the intentions (no arrow
+pointing to it)?
+
+\begin{response}
+Please note that the arrow says percepts/messages (the latter can generate goals directly. The link between the "interpreter" box and "intentions" is meant to cover also the creation of intentions.
+\end{response}
+
+page 7, line 19 - What does it mean "to be more appropriate to the
+current context"?
+
+\begin{response}
+We tried to improve the sentence.
+\end{response}
+
+page 8, line 20/21, another issue you could have mentioned is time bounded
+responses. This is precisely why the robotic community abandoned 
+pure deliberative models. A reflection about this issue wrt BDI agents
+must be done.
+
+\begin{response}
+\tbd{Brian, perhaps you could cite your work on real-time for agent languages to address this?}
+\end{response}
+
+page 8 - I particularly consider ML a subfield of AI. In several parts
+of your text, you mention it in a different context from AI (see page
+14, line 18). Please make a clear statement in the beginning of the
+paper with respect to this concern.
+
+\begin{response}
+\tbd{Have we not done this? I think it was at some point in the text. Alessandro, perhaps you could check this when you handle your parts?}
+\end{response}
+
+page 9 - it would be nice to explain how an API should be integrated, in
+general terms, to a BDI language. You mention this in lines 22-25, but
+you don't explain in detail.
+
+page 10 - Pantoja (2016) uses a result of Stabile ( BRACIS 2015) about perceptual
+filtering in Jason, the text does not acknowledge this fact properly
+
+page 11, lines 1-6, I'd add efficiency / bounded time response as a
+challenge too
+
+page 11, line 40-41, what is an intention plan?
+
+\begin{response}
+\tbd{Amal, I think you added the description to this work, this "intention plan" expression needs to be fixed or explained, and also note that a reviewer thought there was too much detail on this particular work.}
+\end{response}
+
+page 13, lines 38-39, what do you mean by an extended BDI
+architecture? Integrating APIs as mentioned in my remark in page 9?
+You should precise it better.
+
+page 16, line 9, what does it mean "However implemented"?
+
+\begin{response}
+Regardless of the way in which it's been implemented
+\end{response}
+
+Some few typos:
+
+page 7, line 18, ... in behaviour that *is* both more appropriated ...
+
+page 9, line 22, *Their* paper introduces ....
+
+page 11, line 35, languages. (double dot)
+
+page 14, line 41, case, in which (insert blank)
+
+page 16, line 13, built-in (sounds better)
+
+\begin{response}
+All the typos above were fixed, thanks.
+\end{response}
+
+
+Reviewer \#2: SUMMARY 
+
+The paper briefly argues that, despite the recent focus on machine learning, there is, and will continue to be, a place for agent programming. It goes on to survey the history of the field, highlighting both the contributions of the BDI model, and its shortcomings, as well as a range of work that aims to eliminate these shortcomings. Two approaches for integrating AI into agent programming are outlined. A broad trend is the move to add more feature into the language, so the level of programming is higher.
+
+I would suggest that the authors improve the paper by:
+
+1. Being more careful about which papers they select, ensuring broader more systematic coverage, and ensuring that they also indicate the level of maturity and significance 
+
+2. Expand the paper to have greater depth and nuance, especially in the discussion of the way forward (section 4)
+
+3. Ideally, provide a useful roadmap, or challenges, that add something new to the discussions that have already taken place at recent EMAS and Dagstuhl events.  
+
+4. Please fix the bibliography, and please provide evidence for a range of claims (see below)
+
+5. Either weaken the claims (in the cover letter) regarding the discussion of machine learning as not being the way forward, or expand this in the paper. Currently the discussion of why machine learning will not replace agent programming is quite brief, and is not the focus of the paper. 
+
+
+MAJOR
+
+I started reading this paper with great interest, but ended up disappointed. The paper suffers from a number of significant flaws.
+
+Firstly, it is quite brief - this means that none of the (important) topics are covered in the depth that they deserve. The survey of the state-of-the-art and the literature is brief and "sketchy", the
+
+\begin{response}
+There is a (purposely) brief survey of the history of AOP, as this is not meant to be a survey paper. Besides that section, other parts of the paper give examples of work that has combined AI techniques into AOP. Still, as a Viewpoint type of paper, those references are mainly there to give an ideia of the range of work done on such combination, but the main purpose of the paper is to put forward a vision for the future of AOP as facilitating the practical use of all sorts of AI techniques.
+\end{response}
+
+discussion of work aiming to alleviate the limitations of existing BDI languages is sketched out, and necessarily involves selecting only some work (which is acknowledged by the authors). And the discussion of future directions lacks depth and nuance. For instance, it fails to acknowledge the possible consequences of a richer and more powerful language, namely that the execution model can become more complex, so the programmer may find it harder to understand why a program is behaving the way that it is.  (This relates to discussion on page 16)
+
+The paper also has a number of claims that are asserted without adequate justification or evidence (see detailed comments).
+
+The paper also misses out on important issues. For example, the need for agent development tools to integrate with mainstream tools and platforms has been widely discussed in the community, but is not mentioned in the paper. 
+
+The selection of work to cover is in places odd. Both in terms of which papers are cited, and which are not, and also in terms of the level of detail. There are some papers cited (see below) that do not appear to be significant and influential work (and indeed, some papers cited are only 2-3 page extended abstracts!), whereas there is work that has not been cited that really should be. The level of detail of discussion is also oddly inconsistent: an important piece of work might receive a few sentences, while a specific and minor piece of work might get a whole paragraph. This issue could be mitigated by providing information on the maturity and level of development of different pieces of work. 
+
+One example of work that is missing completely relates to the move from single to multi agent systems, and the need to support multi-agent interactions. 
+
+\begin{response}
+\tbd{I think we have done this but needs double checking.}
+\end{response}
+
+There is a whole community that looks at norms, and this is barely mentioned. There is also highly influential work on social commitments and their role in engineering agent systems. There is also a whole community that considers goal reasoning (cf. panel at the most recent EMAS).  There is also highly influential work on teams of agents (e.g. Milind Tambe's STEAM paper, and subsequent work on Machinetta)
+
+\begin{response}
+These are excellent pointers, of which we are of course familiar, but note that it would be an impossible task to discuss all the other areas of AAMAS which relate to AOP in one way or another. Our aim is to contribute to the JAAMAS anniversary special issue focusing on the EMAS community only, because we assume all other communities (like normative systems, social commitments, teamwork, etc.) will have their own papers. Although it's tempting to extend our paper since Tambe, Singh, and many others related to the points above have heavily influenced the workshops that formed the EMAS community.
+\end{response}
+
+I also have to comment that the selection of work appears to be biased towards the authors' own work. Of the 98 or so citations, almost half feature at least one of the authors of this paper as a co-author. This is very natural, since the authors are of course most familiar with their own work. The authors of this paper *are* key figures in the community, and have produced much work that is influential. However, this proportion strikes me as nonetheless being rather high. 
+
+\begin{response}
+We completely agree with the reviewer and have tried to lower the number of self-citations. \tbd{We need to reduce significantly the self citations or increase the others!!!}
+\end{response}
+
+The selection of work is also somewhat myopic, in the sense that it focuses heavily on work associated with the EMAS community. I do not see this as a big issue, since the paper is effectively a review of this community's work, but it ought to be acknowledged explicitly.
+
+\begin{response}
+Thanks, we have explicitly acknowledged that in the paper (new paragraph at the end of Introduction).
+\end{response}
+
+Finally, please please please go through and carefully fix the bibliography! There is widely varying levels of detail in citations, more than one lower case "bdi", and two cases of the same paper being listed twice with slightly different details.  
+
+\begin{response}
+Apologies for this, the paper was put together in a hurry to meet the special issue deadline. \tbd{Still TBD!!!!!}
+\end{response}
+
+DETAILED COMMENTS
+
+(Page numbers refer to the number printed on the top of the page, and line numbers to the closest number printed on the side of the page)
+
+Citations are often done incorrectly: using (AUTHOR, YEAR) when the citation is part of the sentence (see second paragraph of introduction), and, in many later cases, using AUTHOR (YEAR) when the citation is just an annotation to the sentence. 
+
+The discussion of Corea (2018) is difficult to follow without having read the original paper. 
+
+P2, line 26: "arguably the main contribution" - this is somewhat too strong. Perhaps weaken to "... one of the main"
+
+\begin{response}
+Done as suggested.
+\end{response}
+
+P5, L36: you claim the two most prominent BDI-based languages of the period were AgentSpeak and 3APL. This is debatable - and I would suggest that PRS certainly deserves a mention here! 
+
+\begin{response}
+The claim was weakened and PRS referred to.
+\end{response}
+
+P6: (history) - one thing that would help is some indication of the maturity and use of different languages. There is a big difference between a language that was proposed in a short paper, implemented as a rough prototype, and used only by its author for a few small problems, and a language that was developed by a group over time, and was used for many applications. The selection of languages in the history is obviously limited (can't cover everything) but sometimes obscure minor languages are selected, and much more significant and well-developed languages are left out. For example, JIAC is not mentioned. Nor is JAM. 
+
+\begin{response}
+Referring specifically to the section on the history of AOP, we did not identify which languages the reviewer considers obscure and minor. It is true we purposely omitted languages that are well known such as JAM or have been used for developing many applications like JIAC, because we restricted ourselves to a few languages from each "stage" of the history, citing only those that are widely agreed as having impacted the history of AOP. We don't mind adding a few more specific languages if the reviewer still disagrees with our choice.
+\end{response}
+
+P7 (key contributions): this page contains a number of claims that raised my eyebrows, and that need to be either toned down, or provided with some evidence (e.g. citations). These include:
+
+- BDI is the dominant paradigm in agent programming - what if we look more broadly at the AI community, not just the EMAS community? 
+
+\begin{response}
+We made it more clear that BDI is dominant among Agent Oriented Programming Languages, not the development/programming of anything that might be called a multi-agent system including both academia and industry.
+\end{response}
+
+Is this still a true statement? What if we consider the range of agent applications developed? There have been surveys (e.g. the one by Dignum \& Dignum [not cited, and really should be], and the more recent survey by Muller and Fischer [ditto]). From memory they show that most agent systems are not developed using BDI languages. 
+
+- End of second paragraph you claim that BDI languages can improve programmer productivity. Again, this is a strong claim. You might want to cite the AAMAS 2006 paper by Steve Benfield et al, which makes these claims from an industry perspective (but sadly does not provide adequate data to substantiate their claims). 
+
+- Lines 18-19 (p7): BDI agent are more robust in the face of failure - more robust than what? Evidence for this claim?  Similarly, a little later you claim that such context specific plans are more cumbersome to code in non-BDI languages. This is not argued, and is not immediately obvious. 
+
+- Line 31: a BDI agent is often able to recover (when a plan fails) - this is not quite true: it of course depends on the programmer having provided sufficient alternative plans. 
+
+- Line 36: BDI programs with the deliberation cycle provides "lower programmer effort" (again, citation needed - see Benfield)
+
+- Line 46-48: BDI approach is critical to intelligibility .. and in particular Intentions make it much easier for end-users to understand what an agent is doing. It is not at all clear why this should be the case - please expand and explain. (Also top of p8, where you say it is straightforward to provide explanation) 
+
+- P8, L12: citation would help to support the argument that lack of transparency and predictability is an issue - there are lots of papers that argue this. 
+
+Page 11: the discussion of AgLOTOS is oddly detailed (compared to other work in this section). I immediately wondered if the author of the work was also an author of this paper (spoiler: yes, they are).
+
+Page 12, Lines 6-13: this paragraph belongs in the next bit (AI planning)
+
+Page 15: there have been various papers proposing modular agent architectures - from memory Emma Norling had a paper in the AAMAS blue skies track recently, and I think Virginia DIgnum also had a recent paper. 
+
+Page 16, L5-7: how might existing BDI concepts form a foundation for integrating AI capabilities? 
+
+Bibliography:
+- Cardoso 2016 and 2017 - one is a local conference, the other an extended abstract. Should this work be selected to be cited in this paper?
+
+\begin{response}
+The extended abstract was changed to a full paper to appear in AAMAS-2019. The local conference has proceedings available in IEEE's DL but we deleted this self-citation to help with the statistics.
+\end{response}
+
+- Dastani 2008a\&b are the same paper twice 
+
+\begin{response}
+Fixed, thanks.
+\end{response}
+
+- Panison \& Bordini 2017b- another extended abstract 
+
+\begin{response}
+This reference was deleted too.
+\end{response}
+
+- Winikoff 2005a\&b - duplicate
+
+\begin{response}
+Fixed, thanks.
+\end{response}
+
+- Yao 2014 and 2016a - extended abstracts 
+
+SPECIFIC CORRECTIONS 
+
+P2, line 19 into BDI agent -> into the/a BDI agent
+P2, line 22: A.I. - for consistency leave out the dots
+P2, L49: "intention" -> "intentions"
+
+P4, footnote 1: expand (and define) acronym APL
+
+P5, L30 "all different programming paradigms" - too strong - suggest "many different" (if you want to keep it, then you need to argue that every single programming paradigm has been considered)
+P5, L32: expand acronym AOP
+P5, L43: "There is a number of resources" -> "There are a number of resources"
+
+\tbd{This part of the text disappeared, was the reference to existing surveys moved elsewhere or just deleted? It may have been better to comment it out rather than delete.}
+
+P6, L4: IRMA and PRS - citation?
+P6, L6: expand acronyms ProMAS and DALT
+P6, L16-18: unclear whether only atomic execution was formalised in 2APL, or also other Jason features. Sentence is grammatically awkward.
+P6, L31: "of course" appears twice 
+P6, L38: could perhaps also mention that EMAS arose from a Dagstuhl workshop
+
+\tbd{The one above about Dagstuhl is still TO BE DONE!}
+
+P10, L8: what is an "enthymeme"?
+
+P14, L41: missing space before "In which"
+
+\begin{response}
+All the Specific Corrections above have been carried out, thanks.
+\end{response}
+
+Reviewer \#3: This paper provides a view point on the past and future role of the agent-oriented programming area in AI-based systems. I thank the authors for reflecting on this. I share their claim that AOP covers some requirements of intelligent systems that are not that well addressed by other AI approaches, such as ML. As such, AOP may, and probably should, be a part of a larger AI solution. I concur with the hypothesis that research and development in AOP is important and a special issue like this one would be seriously incomplete if there is no article on the past, present and future of AOP.
+
+The team of authors is a very good representation of the work carried out in AOP and areas around it. The paper has a mixture of survey and future analysis/perspectives. Several of the main AOP approaches and systems are discussed, within a historical perspective rather than a technical one. The article also discusses what role AOP platforms can or should play in a larger AI solution, and what their advantages are wrt other AI techniques, in particular ML.
+
+There are however three general comments I should state, in the hope to improve the paper so it better achieve its objectives. These comments are in the context of the aim of this special issue:
+
+"The aim is not simply to review what has happened, but to understand what has been learned and what might need to be
+done differently."
+
+(Below, I list detailed examples that align with these main concerns, as well as "editorial" comments.) 
+
+===================
+1) AUDIENCE. It was not clear to me what the expected audience of this article is. For what I could guess, it appears to be framed more for AOP researchers. The paper assumes familiarity with AOP aspects and names that would be, in my view, very hard to grasp for someone outside AOP. So, if this paper aims to educate, say, a ML researcher what AOP can bring to the table that they may not have,  then I think the paper needs a bit of reshaping. Things like "failure recovery" or how GOAL changes the focus from procedural plans to simple reactive rules, would be non-intelligible for a non AOP expert and there are no example, case studies discussed: which applications AOP are suit for? Section 2 is kind of redundant for an AOP person and not clear enough for an outsider (who would benefit from more concrete explanations and examples). 
+
+
+2) SURVEY. The survey aspect of the paper reads, in my view, much focused on the authors' work and a somehow "disorganized":
+
+a. In some parts, it seems to suggest an historical perspective will be provided, which would suit the aim of the special issue. But, it starts basically with agents in the 2000's from the authors. For example, there is almost nothing on PRS, but in the end almost all the BDI systems are versions of PRS, much more modern of course. Very little is discussed about programming systems at the intentional stance, which would be part of the historical perspective.
+
+b. It was hard to understand if the article is about agent-oriented programming or the specific BDI programming paradigm of AOP. In many places, it reads as the latter, including subtitles of sections. But then non-pure BDI languages are reviewed, like GOAL or Teleo-Reactive which are not per se core BDI frameworks; unless we take a broader view of BDI languages which I am totally fine but then one cannot ignore the huge work on Golog-like languages. Note that, while less SE "mainstream", the work on Golog-like in AOP has arguably done more connections with other fields, like belief representation, integration with planning or even decision theory (DTGolog). 
+
+I am aware that it is very hard to organize a survey on this area. The point is that it reads a bit of listing some somehow arbitrary list of work without a consistent overarching umbrella. The text flow is also hard to follow, in my view; in many parts reads  as an enumeration without much "aggregation".
+
+I wonder if it is better, for both AOP researchers and outsiders, to give a more complete list of systems (table?), starting all the way from PRS say to even Java-based SARL (check that system, to me is one of best done today for "mainstream" programming) and set-up some aggreagated dimensions to compare/review them: reactive behavior (almost all), planning, plan-library based for non-functional requirements, advanced KR for beliefs, distributed computing (JADEX, SARL are strong), meta-level reasoning (e.g., meta-plans in JACK and PRS; reflection rules in 3APL), verification (Golog is very solid here), etc. Rather than a stream of citations with short text, I would have liked a more "aggregation" type of survey, a landscape. Then a table, easier to read, can be provided giving "ticks" or level of achievements to each, etc. 
+
+c. As a survey, it is missing some seminal references to refer to key issues, like Kowalski's for the the observe-plan-act cycle from the 80's (references from 2000's are given for that) and Cohen and Levesque's work on Intentions for the foundations of BDI agents. Also Golog-like languages assuming the paper is about AOP and not BDI only (Golog, ConGolog, IndiGolog, DTGOlog, RTGolog)
+
+\begin{response}
+\tbd{Could someone please add Kowalski's and C\&L references or fix response below?}
+Thanks, we added references to those indeed seminal works. We already had a reference to Golog in Section 2.3 (which has a brief historical survey) and we added references to two of the Golog variants also making a point that most languages have had many variants but it's not our purpose to survey those here. In fact, please note that this is not a survey paper, it's in the Viewpoint category of JAAMAS.
+\end{response}
+
+3) FUTURE/REFLECTIONS. Here, I think the paper says very interesting things, but kind of "on the side" and late. As a reader, as an AOP expert and even more as an outsider, I would like to know very soon,  clearly, and precisely what AOP can bring to the table that other approaches would have a hard time. This includes things discussed (but late and on the side, again) about explainable AI/behavior, verifiable behavior, specification of non-functional requirements, and others such as reactive execution, integration of various AI technologies into an execution framework (note for example how simple SPARK at SRI played the integration platform role in the CALO project). Examples would help (e.g, in many real world there are business processes to follow).
+
+Then, as an AOP researcher, I would like to know what are the top, say 5, specific problems that could be the key to success for AOP to be integrated with other AI solutions like ML. The paper is a bit "timid" on that and I think it would be nice to hear from this authors what they think are the top promising future directions that are not "incremental" steps. For example, enhancing BDI/AOP with built-in infrastructure to do the hard stuff, rather than letting the user deal with that: which ones and how?
+===================
+
+
+Overall I think this is a very good effort in putting together historical perspective, current context within AI, and future direction, and the team is very experienced to provide that story. I suspect it can be tweaked better as per above to achieve the message to either AOP practitioners or outsiders. Overall, the AOP researcher will be interested in reflecting and *aggregating* the key work done so far (more than enumeration) and understand what should come next, in particular in the overall AI context. On the other hand, an outsider (say from ML), needs to understand after reading the paper what is that AOP can contribute that his/her techniques find it hard.
+
+
+I provide below some detailed comments, some even at editorial level and some that are examples of the three issues above. I apologize if they are not so "clean".
+
+
+Page 2, Highlight (Orange):
+Content: "Several large-scale organisations have begun to"
+Comment: Would be nice to have Examples supporting this claim.
+
+Page 2, Highlight (Yellow):
+Content: "machines that sense, learn, reason, and interact with people in new ways to provide insight and advice."
+
+Page 3, Line Drawing (Red)
+Comment: More references, including a Cohen and Levesque in particular.
+
+Page 3, Highlight (Orange):
+Content: "(Rao and Georgeff, 1991)"
+
+There are many cases where the reference is part of the sentence but it does not fit well and should be within (), unless you are referring to the authors themselves (e.g., Rao and Georgeff (1991) showed that....).
+
+Page 4, Highlight (Orange):
+Content: "'sense-plan-act' cycle"
+Comment: I believe Kowalski is one of the first to refer to this cycle, would cite that in a a per like this one.
+
+Page 5, Highlight (Orange):
+Content: "soning over ontologies."
+Comment: Or constraints ?
+
+Page 6, Highlight (Orange):
+Content: "of Golog (Lesp´erance et al., 1995)."
+Comment: Ok but Golog was more offline planning. Later Indigolog is more "related" to BDI I guess...
+
+Page 6, Highlight (Custom Color: \#bf00bf):
+Content: "are survey"
+Comment: there are also
+
+Page 7, Highlight (Custom Color: \#bf00bf):
+Content: "Dagstuhl Seminar Dix and Fisher"
+Comment: Reads strange the name of the organisers like that
+
+Page 7, Underline (Red):
+Content: " based"
+
+Page 7, Underline (Red):
+Content: "based"
+
+Page 7, Highlight (Custom Color: \#bf00bf):
+Content: "was later"
+Comment: were?
+
+Page 7, Highlight (Custom Color: \#bf00bf):
+Content: " Themain idea behind GOAL was to make the language simpler than existing languages,in particular providing rules that lead to the execution of individual actions rather thancourses of actions as in most languages which were typically influenced by the ideason reactive planning systems Georgeff and Lansky (1987a) from the AI literature."
+Comment: Hard to parse. Also sections aims at giving historical overview but it starts discussions systems from year 2000, with PRS mentioned on the side. This is strange.
+
+Page 7, Note (Green):
+Since there are many proper names, would be nice to use another font for system names.
+
+Page 7, Highlight (Orange):
+Content: "and JACK Winikoff (2005b)."
+Comment: Jack cam many years before and there are better refs, such as 
+
+Paolo Busetta, Ralph Ronnquist, Andrew Hodgson, and Andrew Lucas (1999) JACK Intelligent Agents - Components for Intelligent Agents in Java, AgentLink News, Issue 2.
+
+Page 7, Highlight (Orange):
+Content: "Java rather than creating new languages as such."
+Comment: Why is this stated as a "negative" aspect with a "but"?. Isn't this a feature, in particular in the context of this paper about AOP impact on mainstream and AI? maybe I am misreading this, but ...
+
+Page 7, Highlight (Custom Color: \#bf00bf):
+Content: "(although of course the research strand started earlier of course)"
+Comment: Of course twice
+
+Page 7, Highlight (Custom Color: \#bf00bf):
+Content: "the growing interest on"
+Comment: that of
+
+Page 8, Highlight (Orange):
+Content: " (Georgeff et al., 1999). "
+Comment: Quite old reference for this claim
+
+Page 8, Highlight (Orange):
+Content: "AI planning,"
+Comment: First time mentioned, ref?
+
+Page 8, Highlight (Orange):
+Content: "(re)planning"
+Comment: What do we mean by planning here? It's different from the previous use of the term. The BDI systems explained above do not do planning per se.
+
+Page 8, Highlight (Orange):
+Content: "backtracking"
+Comment: This could be very confusing for an outsider, as backtracking is associated with search and planning. The failure recovery process is backtracking at the meta goal execution level, right? I would clarify this, as the idea is for a non AOP expert to read this, I would imagine.
+
+Page 8, Highlight (Yellow):
+Content: "learned, is the intelligibility of the resulting agent be- haviour by end users and stakeholders."
+Comment: Very good!
+
+Page 9, Highlight (Yellow):
+Content: "The very high level of ab- straction (compared to conventional programming) also makes it easier to formally verify complex decision making, allowing us to give guarantees that an agent will be- have correctly in all circumstances (Fisher et al., 2013)."
+Comment: Good. I think for this paper all these have to come before and more in the foreground 
+
+Page 9, Highlight (Orange):
+Content: " are essentially limited to: - selecting pre-defined plans at run time based on the triggering event and theagent's current beliefs; and - some support for handling plan failure, e.g., aborting the plan in which the failureoccurred and trying another applicable plan to achieve the current subgoal. While these features are useful,"
+Comment: I would enumerate what the systems do NOT do, rather than what they do. The text even recognised that these two are useful, so they are not limitations. 
+
+For example, cannot build new plans not programmed already, and have little support for the key selection functions, plans and intentions selection.
+
+Page 9, Highlight (Orange):
+Content: "AI or machine learning techniques,"
+Comment: ML is an AI technique, right?
+
+Page 10, Highlight (Orange):
+Content: "Knowledge representation and reasoning"
+Comment: Perfect, but this does. It seem to match the above limitations given.
+
+Page 10, Highlight (Orange):
+Content: "more expressive queries to the belief base,"
+Comment: This is strange, how could it be possible if DLs are special types of FOL? How can they achieve more expressively than FOL? DL is about achieving enough expressivity with good complexity 
+
+Page 12, Highlight (Orange):
+Content: "(Airiau et al., 2008)."
+Comment: This is very preliminary work on that, Dhirendra Singh has much more developed approach and articles, including a JAAMAS paper.
+
+Page 13, Highlight (Orange):
+Content: "Also falling within this general approach are techniques based on HTN planning and search. For example, Sardi˜na et al. (2006) show how an HTN planner can be in- tegrated into a BDI architecture to find hierarchical decompositions of (agent) plans that avoid incorrect decisions at choice points, and so are less likely to fail during exe- cution. Similarly, Yao et al. (2014); Yao and Logan (2016); Yao et al. (2016b,a) show how techniques based on Monte-Carlo Tree Search can be used to select plans that minimise conflicts between intentions, achieve goals by their deadlines and recover fromfailures."
+Comment: It is very strange to have these works listed under machine learning, they do no learning but planning, which is the heading just after. Very confusing to me. 
+
+Instead of using the techniques as headings, I would use the problem in AOP that are trying to address. For example, "smarter plan selection" or "synthesis of new plans", etc.
+
+Page 13, Highlight (Orange):
+Content: "AI planning"
+Comment: This is one of the areas that are important in plugging BDI with other core AI areas, like automated planning. To me the explanation given below is extremely short and does not provide much to the outsider of AOP. What planner and technique is used for jade or Jason for example. Also the work of de Silva and Rao K, is missing, using first principle planning as "macro" for user intent, an extremely important point for BDI paradigm. Also, I believe Felipe M. Has done work in FPP for AgentSpeak.
+
+Page 14, Highlight (Orange):
+Content: "to avoid conflicts."
+Comment: In my view, the. On AOP expert will not understand why this is fundamental issue, and how is this addressed in existing systems (or how it is not!)
+
+Page 14, Highlight (Orange):
+Content: "in Nilsson's Teleo-Reactive rule based agent programming lan- guage Nilsson (2001)."
+Comment: I think it's great that TR is mentioned, but this opens the question why there are other very nice AOP approaches not reviewed. In mainstream agent SE I can think of SARL, one of the best I have seen lately. True, to core BDI but since TR and even GOAL are listed, I am confused which was the "principle" to select some. And also of course all the Golog like languages. True, not core BDI but the again same argument...
+
+Page 14, Highlight (Orange):
+Content: "integrating AI and ML into BDI-based"
+Comment: And planning and constraints and other ai fields? The works above are not just about ML integrations so this sentences reads not aligned.
+
+Page 15, Highlight (Orange):
+Content: "the BDI archi- tecture and cycle."
+Comment: See, here it seems the paper is only conceNed about core BDI
+
+Page 16, Highlight (Orange):
+Content: "EIS"
+Comment: Can we spell?
+
+Page 16, Highlight (Orange):
+Content: "In this case,"
+Comment: Which case? Section just started.
+
+Page 16, Highlight (Orange):
+Content: "PRS"
+Comment: Note neither PRS nor dMars have been discussed, even on the historical content.
+
+Page 17, Highlight (Yellow):
+Content: "However implemented, the aimof this approach is to raise the level of abstraction of agent programming, by increasing the basic 'competence' of the agent language or platform. The agent developer no longer has to encode reasoning such as plan failure recovery, plan selection, and so forth in the agent's plans and/or by configuring the the agent increases, the role of the agent developer will change fromprogramming ex- actly what the agent will do in all situations, to providing more strategic information, heuristics, advice, social knowledge (e.g., norms), etc. about what the agent should (or should not) do in a given situation, leaving the details of the implementation of the strategy to the agent."
+Comment: Exactly! This is fundamental point I believe for this paper and is left too late and underdeveloped. For example, how can we use statistical learning for this? Can we?
+
+Page 17, Highlight (Orange):
+Content: "at least for the foreseeable future."
+Comment: Reads vague and doubtful, as if you don't even believe it much...
+
+Page 17, Highlight (Yellow):
+Content: "the critical aspects of the agent's behaviour are required to fallwithin a particular envelope or follow a particular pattern. "
+Comment: This I think is also important and must be stated much before, clear, and with examples (how a plane is flew or business processes)
+
+Page 18, Highlight (Yellow):
+Content: "In its current form, it offers significantadvantages of intelligibility and verifyability that are difficult to replicate using only"
+
+Page 28, Highlight (Orange):
+Content: "The claim that future intelligent systems will be trained using machine learn- ing techniques rather than developed by human programmers has implications for ologies and tools for programming agents."
+Comment: I don't understand the claim here. Is it that ml will for sure be used as such or that doing so may have not so great advantages? In any case, the question is about why this viewpoint is topical now. It seems because success in ML makes many believe KR - programming approaches are not or will not be needed, and you want to argue against that proposition?
+
+Page 28, Highlight (Orange):
+Content: "We provide a brief survey of the last 20 years of agent oriented programming and agent development platforms."
+Comment: This is my major doubt. Are we after a survey paper?
+
+Page 29, Highlight (Orange):
+Content: "The (Hindriks 2014) paper traces the development of the agent oriented ap- proach to programming from the 1990s to the present day."
+Comment: Ok but this is a big overlap with this paper, which it's majority is a survey, as far as I can see
+
+\end{reviews}
+\end{document}

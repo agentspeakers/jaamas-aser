@@ -1,0 +1,94 @@
+\section{Introduction}
+\label{sec:intro}
+
+\todo{[OLD VERSION]}
+
+%
+% About AgentSpeak(L)
+%
+{\asl} has been introduced in \cite{Rao96}  with the purpose of defining an expressive, 
+abstract language capturing the main aspects of the Belief-Desire-Intention architecture~\cite{Bratman88,Georgeff:1987:RRP:1863766.1863818}, featuring a formally defined semantics and an abstract interpreter.
+%
+The starting point to define the language were real-world implemented systems, namely the
+Procedural Reasoning System (PRS)~\cite{Ingrand:1992:ARR:629535.629890} and the Distributed Multi-Agent Reasoning System (dMARS).
+%
+
+%
+% Concrete APL
+% 
+{\asl}  and PRS have become a main reference for implementing concrete Agent Programming Languages 
+based on the BDI model: 
+%
+main examples are Jason~\cite{jason06,bordini:07} and ASTRA~\cite{DBLP:conf/prima/CollierRL15}.
+%
+Besides Agent Programming Languages, the {\asl} model has been adopted
+as the main reference to development several BDI agent-based
+frameworks and technologies~\cite{BordiniMAPlpa,BordiniMAPlta} as well
+as serving as inspiration for theoretical work aiming to formalise
+aspects of BDI agents and agent programming
+languages~\cite{DBLP:conf/kr/WinikoffPHT02,DBLP:conf/promas/DennisFBFW07,DBLP:journals/aamas/BordiniFVW06}.
+
+
+%
+% Contribution
+%
+Existing Agent Programming Languages extended the language with
+constructs and mechanisms making it practical from a programming point
+of view~\cite{jason06}.
+%
+Besides, proposals in literature extended the model is order to make
+it effective for specific kinds of systems --- e.g., real-time
+systems~\cite{Vikhorev:2011:APP:2030470.2030529} -- or to
+improve the structure of programs, e.g. in terms of
+modularity~\cite{Madden2010,Nunes2014}.
+%%RHB: Not sure what should go in XXX above?
+
+%
+Along this line, in this paper we describe a novel extension of the
+{\asl} model --- called {\aser} --- featuring \emph{plan
+  encapsulation}, i.e. the possibility to define plans that fully
+encapsulate the strategy to achieve the corresponding goals,
+integrating both the pro-active and the reactive behaviour.
+%
+% Key points
+%
+This extension turns out to bring a number of important benefits to
+agent programming based on the BDI model, namely:
+%
+\begin{itemize}
+\item improving the overall readability of the agent source code,
+  reducing fragmentation and increasing modularity;
+\item promoting a more goal-oriented programming style, enforcing yet
+  preserving the possibility to specify purely reactive behaviour,
+  properly encapsulated into plans for goals;
+\item improving intention management, enforcing a one-to-one relation
+  between intentions and goals --- so every intention is related to a
+  (top-level) goal;
+\item improving failure handling, in particular making it easier the
+  management of failures related to plans for reacting to environment
+  events;
+\end{itemize}
+%
+% \noindent Besides the benefits in terms of agent programming, the approach reduces the gap between the design level and the programming level,  ...
+% \item facilitate goal-based reasoning -- ...
+% \end{itemize}
+
+\noindent The remainder of the paper is organised as follows:
+%
+first we describe in details the motivations that lead to the proposal
+of a new AgentSpeak extension (Section~\ref{sec:motivation});
+%
+then, we introduce and discuss {\aser}, defining the main concepts,
+syntax and semantics --- first informally (Section~\ref{sec:proposal})
+and then providing the formalisation of some key aspect
+(Section~\ref{sec:formalisation}).
+%
+We discuss then the results of a first evaluation that has been
+carried out, based on a prototype implementation extending the ASTRA
+platform (Section~\ref{sec:evaluation}).
+%
+We conclude the paper discussing related work
+(Section~\ref{sec:related}) and sketching future work
+(Section~\ref{sec:conclusion}).
+
+

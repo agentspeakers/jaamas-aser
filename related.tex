@@ -1,0 +1,28 @@
+\section{Related Work}
+\label{sec:related}
+
+\todo{OLD}
+
+{\aser} is primarily related to work in literature focusing on improving cognitive BDI agent programming.
+%
+% MODULARITY
+%
+A main aspect widely discussed and developed in the literature is  \emph{modularity}~\cite{Madden2010, Busetta2000,5285116,Novak:2006:MBA:1160633.1160814,Ortiz-Hernandez2016,vanRiemsdijk:2006:GMA:1160633.1160864,Hindriks2008,Nunes2014}.
+%
+In programming languages, modularity is strongly related to encapsulation, in fact  strengthening encapsulation typically leads to refining modularity, in particular devising more coarse-grained modules.
+%
+{\aser} enriches the spectrum of approaches elaborated in literature for improving modularity in BDI-based agent programming languages by devising coarse-grained plans as modules encapsulating goal-oriented \emph{and} reactive behaviour. 
+
+Besides, {\aser} is related to existing BDI agent programming languages extending the basic plan model as found in the original proposal of {\asl}.
+%
+In this context, a main reference is \textsf{CANPlan}~\cite{Sardina2011}, a  BDI-style agent-oriented programming language enhancing usual BDI programming style with declarative goals, look-ahead planning, and failure handling. 
+%
+It allows programmers to mix both procedural and declarative aspects of goals, enabling reasoning about properties of goals and decoupling plans from what these plans are meant to achieve. 
+%
+The lookahead planning makes it possible to guarantee goal achievability and avoid undesirable situations. 
+%
+The plan model adopted in {\textsf{CANPlan}} is analogous to the {\asl} one. Each plan is characterised by a plan rule \textsf{e(t) : $\psi$(xt, y) $\leftarrow$ P(xt, y, z).}, where \textsf{P} is a ``reasonable strategy'' to follow when \textsf{$\psi$} is believed true in order to resolve/achieve the event.
+%
+\textsf{P} can be a rich composition of actions but not reactions.  
+%
+Reactive behaviours can be expressed instead --- like in {\asl} and in the basic BDI --- as separate plans handling belief updates corresponding  to environment events. 
