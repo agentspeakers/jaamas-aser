@@ -1,10 +1,53 @@
-\section{Formal Semantics}
+\section{Formal Syntax and Semantics}
 \label{sec:formalisation}
+
+We first give the formal syntax of \aser, as per the following
+grammar:
+
+\begin{figure}[htbp]
+  \footnotesize{\ttfamily
+    \begin{center}
+      \begin{tabular}{l c l l} 
+   ag & ::= & bs gs gps \\
+   bs & ::= & af$_1$ ... af$_{\textrm{n}}$   & (n $\geq$ 0)\\
+   gs & ::= & \textbf{!}af$_1$ ... \textbf{!}af$_{\textrm{n}}$ & (n $\geq$ 0)\\
+   gps & ::= & gp$_1$ ... gp$_{\textrm{n}}$  & (n $\geq$ 1)\\
+   gp & ::= & \textbf{+!}af \textbf{:} lf \textbf{<:} lf \textbf{\{} [
+              \textbf{<-} h\textbf{.} ] ( gp \galt op )* \textbf{\}}
+              \\ % g-plans 
+   op & ::= & te \textbf{:} lf \textbf{<-} h\textbf{.} \\ % old style plans
+   te & ::= & \textbf{+}af \galt \textbf{-}af \galt \textbf{+}g  \galt
+              \textbf{-}g \\ 
+   g  & ::= & \textbf{!}af \galt \textbf{?}af \\
+   af & ::= & P\textbf{(}t$_1$\textbf{,} \ldots \textbf{,}
+              t$_n$\textbf{)} & (n $\geq$ 0)\\   
+   lf & ::= & af \galt $\neg$ lf \galt (lf $\wedge$ lf) \galt (lf $\vee$
+              lf) \galt \texttt{true} \\
+   h  & ::= & h$_1$\textbf{;} \texttt{true} \galt \texttt{true} \\
+   h$_1$ & ::= & a \galt g \galt h$_1$\textbf{;} h$_1$ \\
+   a  & ::= & A\textbf{(}t$_1$\textbf{,} \ldots \textbf{,} t$_n$\textbf{)} &  (n $\geq$ 0) \\
+\end{tabular}
+    \end{center}
+}
+\caption{Syntax of \aser}
+\label{fig:syntax}
+\end{figure}
+
+\noindent
+where metavariable $P$ stands for a predicate symbol, $t_i$ stand for
+first order terms (as in Prolog for example), and metavariable $A$
+stands for an action symbol. Note also that this is an abstract
+syntax, it contains only the fundamental aspects of the language for
+the purposes of formalisation. Those familiar with the actual systems
+where \aser has been implemented should be aware that all the
+syntactic features of the original systems are of course kept. For
+example, the syntax here does not include the \verb|!!| operator,
+annotations, and many other \jason features.
 
 %% First update reasoning cycle states...
 
-Briefly, these are the changes in the semantics of AgentSpeak(L)
-that are needed to accomodate the new features of AgentSpeaker(ER):
+Briefly, these are the changes in the semantics of \asl
+that are needed to accomodate the new features of \aser:
 
 \begin{itemize}
 \item in the beginning of the reasoning cycle, check all
