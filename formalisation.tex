@@ -9,9 +9,9 @@ grammar:
     \begin{center}
       \begin{tabular}{l c l l} 
    ag & ::= & bs gs gps \\
-   bs & ::= & af$_1$ ... af$_{\textrm{n}}$   & (n $\geq$ 0)\\
-   gs & ::= & \textbf{!}af$_1$ ... \textbf{!}af$_{\textrm{n}}$ & (n $\geq$ 0)\\
-   gps & ::= & gp$_1$ ... gp$_{\textrm{n}}$  & (n $\geq$ 1)\\
+   bs & ::= & af$_{\texttt{1}}$ ... af$_{\texttt{n}}$   & (n $\geq$ 0)\\
+   gs & ::= & \textbf{!}af$_{\texttt{1}}$ ... \textbf{!}af$_{\texttt{n}}$ & (n $\geq$ 0)\\
+   gps & ::= & gp$_{\texttt{1}}$ ... gp$_{\texttt{n}}$  & (n $\geq$ 1)\\
    gp & ::= & \textbf{+!}af \textbf{:} lf \textbf{<:} lf \textbf{\{} [
               \textbf{<-} h\textbf{.} ] ( gp \galt op )* \textbf{\}}
               \\ % g-plans 
@@ -19,13 +19,13 @@ grammar:
    te & ::= & \textbf{+}af \galt \textbf{-}af \galt \textbf{+}g  \galt
               \textbf{-}g \\ 
    g  & ::= & \textbf{!}af \galt \textbf{?}af \\
-   af & ::= & P\textbf{(}t$_1$\textbf{,} \ldots \textbf{,}
-              t$_n$\textbf{)} & (n $\geq$ 0)\\   
+   af & ::= & P\textbf{(}t$_{\texttt{1}}$\textbf{,} \ldots \textbf{,}
+              t$_{\texttt{n}}$\textbf{)} & (n $\geq$ 0)\\   
    lf & ::= & af \galt $\neg$ lf \galt (lf $\wedge$ lf) \galt (lf $\vee$
               lf) \galt \texttt{true} \\
-   h  & ::= & h$_1$\textbf{;} \texttt{true} \galt \texttt{true} \\
-   h$_1$ & ::= & a \galt g \galt h$_1$\textbf{;} h$_1$ \\
-   a  & ::= & A\textbf{(}t$_1$\textbf{,} \ldots \textbf{,} t$_n$\textbf{)} &  (n $\geq$ 0) \\
+   h  & ::= & h$_{\texttt{1}}$\textbf{;} \texttt{true} \galt \texttt{true} \\
+   h$_{\texttt{1}}$ & ::= & a \galt g \galt h$_{\texttt{1}}$\textbf{;} h$_{\texttt{1}}$ \\
+   a  & ::= & A\textbf{(}t$_{\texttt{1}}$\textbf{,} \ldots \textbf{,} t$_{\texttt{n}}$\textbf{)} &  (n $\geq$ 0) \\
 \end{tabular}
     \end{center}
 }
